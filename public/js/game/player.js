@@ -22,10 +22,10 @@ class Player{
         if(this.id === ID){
             this.move();
             this.checkCrates();
+            this.checkHit();
             this.shoot();
             if(this.overheating > 0) this.overheating -= 1;
         }
-        this.checkHit();
     }
     move(){
         this.checkKeys();
@@ -61,10 +61,18 @@ class Player{
     }
     checkHit(){
         let col = checkColission(this, bullets);
-        if(col.object.id != this.id){
-            if(col.hit){
-                if(this.id === ID) this.health--;
-                bullets.splice(bullets.indexOf(col.object));
+        if(col.object){
+            console.log("CHECL");
+            if(!col.object.friendly){
+                if(col.hit){
+                    this.health--;
+                    bullets.splice(bullets.indexOf(col.object), 1);
+                    let data = {
+                        game: GAME,
+                        bullet: bullets.indexOf(col.object),
+                    }
+                    socket.emit("hit", data);
+                }
             }
         }
         if(this.health < 1){

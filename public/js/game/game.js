@@ -13,14 +13,16 @@ const begin = (world) => {
         }
     });
     socket.on("bullet", data => {
-        if(data.game.name === GAME.name){
-            new Bullet(data.bullet.pos, data.bullet.speed, "enemy");
-        }
+        if(data.game.name === GAME.name)
+            new Bullet(data.bullet.pos, data.bullet.speed, false);
+    });
+    socket.on("hit", data => {
+        if(data.game.name === GAME.name)
+            bullets.splice(data.bullet, 1);
     });
     socket.on("crate", data => {
-        if(data.game.name === GAME.name){
+        if(data.game.name === GAME.name)
             crates.splice(data.crate, 1);
-        }
     });
     socket.on("victory", data => {
         WON = true;

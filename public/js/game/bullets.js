@@ -1,10 +1,10 @@
 const bullets = [];
 
 class Bullet{
-    constructor(pos, speed, id = ID){
+    constructor(pos, speed, friendly = true){
         this.pos = pos;
         this.size = v(scl/3, scl/3);
-        this.id = id;
+        this.friendly = friendly;
         this.speed = speed;
         this.rotation = angle(this.pos, v(this.pos.x + this.speed.x*100, this.pos.y + this.speed.y*100));
         this.fired = false;
