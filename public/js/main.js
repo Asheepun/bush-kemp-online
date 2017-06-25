@@ -37,9 +37,15 @@ window.onload = () => {
 }
 
 const createGame = () => {
-    if(checkAll(waiting, game => game.name != name.value)
-    && !GAME
-    && name.value != ""){
+    if(name.value === ""){
+        let no = document.getElementById("no-name");
+        no.style.display = "block";
+        setTimeout(() => no.style.display = "none", 3000);
+    }else if(!checkAll(waiting, game => game.name != name.value)){
+        let no = document.getElementById("used-name");
+        no.style.display = "block";
+        setTimeout(() => no.style.display = "none", 3000);
+    }else if(!GAME){
         GAME = {
             name: name.value,
             pos: 1,
@@ -49,6 +55,7 @@ const createGame = () => {
         }
         socket.emit("creategame", data);
         register.style.display = "none";
+
     }
 }
 

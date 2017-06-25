@@ -5,3 +5,8 @@
 #game {
     display:none;
 }
+
+h2 {
+    display:none;
+    color:red;
+}

@@ -40,3 +40,11 @@ const angle = (v1, v2) => {
         v2.x - v1.x
     );
 }
+
+const getV = (v1, v2) => {
+    let dif = sub(v1, v2);
+    dif = normalize(dif);
+    dif = reverse(dif);
+    return dif;
+
+}
