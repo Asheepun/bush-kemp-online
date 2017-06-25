@@ -13,7 +13,7 @@ const initializeMap = () => {
             }
             if(tile === "#") new Obstacle(v(x, y));
             if(tile === "B") new Block(v(x, y), "green", bushes); 
-            if(tile === "C") new Crate(v(x + scl/4, y + scl/4));
+            if(tile === "C") new Crate(v(x, y));
         }
     }
 }

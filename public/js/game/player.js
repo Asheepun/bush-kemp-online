@@ -62,7 +62,6 @@ class Player{
     checkHit(){
         let col = checkColission(this, bullets);
         if(col.object){
-            console.log("CHECL");
             if(!col.object.friendly){
                 if(col.hit){
                     this.health--;
@@ -75,7 +74,7 @@ class Player{
                 }
             }
         }
-        if(this.health < 1){
+        if(this.health <= 0){
             let data = {
                 game: GAME,
             }
@@ -89,6 +88,7 @@ class Player{
         let col = checkColission(this, crates);
         if(col.hit){
             this.gun = guns[Math.floor(Math.random()*(guns.length-1.1))+1];
+            new Text(this.gun.getName(), v(this.pos.x - 50, this.pos.y));
             if(col.object){
                 let data = {
                     game: GAME,

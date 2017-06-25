@@ -16,6 +16,10 @@ const begin = (world) => {
         if(data.game.name === GAME.name)
             new Bullet(data.bullet.pos, data.bullet.speed, false);
     });
+    socket.on("explosion", data => {
+        if(data.game.name === GAME.name)
+            new Explosion(data.explosion.pos);
+    });
     socket.on("hit", data => {
         if(data.game.name === GAME.name)
             bullets.splice(data.bullet, 1);
@@ -33,6 +37,7 @@ const begin = (world) => {
 
 const setup = () => {
     spliceArrays([
+        explosions,
         players,
         obstacles,
         bullets,
@@ -40,6 +45,7 @@ const setup = () => {
         bushes,
         crates,
         guns,
+        texts,
     ]);
     c = document.getElementById("canvas");
     ctx = c.getContext("2d");
@@ -60,8 +66,10 @@ const setup = () => {
 const update = () => {
     updateArrays([
         bullets,
+        explosions,
         obstacles,
         players,
+        texts,
     ]);
     updateOffset();
 }
@@ -78,6 +86,8 @@ const draw = () => {
         bullets,
         players,
         bushes,
+        explosions,
+        texts,
     ]);
     drawHud();
     ctx.restore();
@@ -104,10 +114,10 @@ const end = () => {
     ctx.font="50px solid"
     if(WON){
         ctx.fillStyle="green";
-        ctx.fillText("Victory!", c.width/2, c.height/2 - 100);
+        ctx.fillText("Victory!", c.width/2-100, c.height/2);
     }else {
         ctx.fillStyle="red";
-        ctx.fillText("Defeat", c.width/2, c.height/2 - 100);
+        ctx.fillText("Defeat", c.width/2-100, c.height/2);
     }
 }
 

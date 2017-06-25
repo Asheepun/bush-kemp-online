@@ -6,6 +6,7 @@ class Obstacle{
     constructor(pos){
         this.pos = pos;
         this.size = v(scl, scl);
+        this.origin = v(this.pos.x + scl/2, this.pos.y + scl/2);
         this.health = 2;
         this.color = "grey"
         obstacles.push(this);
@@ -18,6 +19,14 @@ class Obstacle{
         if(this.health === 1) this.color = "darkgrey";
         if(this.health < 1){
             new Block(this.pos, "#131313", rubble);
+            if(Math.random() < 0.25){ 
+                let olle = new Explosion(this.pos);
+                let data = {
+                    explosion: olle,
+                    game: GAME,
+                }
+                socket.emit("explosion", data);
+            }
             this.remove();
         }
     }
@@ -31,6 +40,7 @@ class Block{
     constructor(pos, color, arr){
         this.pos = pos;
         this.size = v(scl, scl);
+        this.origin = v(this.pos.x + scl/2, this.pos.y + scl/2);
         this.color = color;
         arr.push(this);
     }

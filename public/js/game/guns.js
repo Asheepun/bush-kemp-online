@@ -70,6 +70,9 @@ const Gun = (n, fr, ss, s = (char) => {
         getSS: () => {
             return shotSpeed;
         },
+        getName: () => {
+            return name;
+        },
         shoot: s,
     };
 }
@@ -77,11 +80,11 @@ const Gun = (n, fr, ss, s = (char) => {
 class Crate{
     constructor(pos){
         this.pos = pos;
-        this.size = v(scl/2, scl/2);
+        this.size = v(scl, scl);
         crates.push(this);
     }
     draw(){
         ctx.fillStyle="brown";
-        ctx.fillRect(this.pos.x, this.pos.y, this.size.x, this.size.y);
+        ctx.fillRect(this.pos.x + scl/4, this.pos.y + scl/4, this.size.x/2, this.size.y/2);
     }
 }
