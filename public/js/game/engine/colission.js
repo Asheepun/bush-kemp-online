@@ -172,6 +172,7 @@ function checkVectorColission(vector, objects){
         if(vector.x >= object.pos.x && vector.x <= object.pos.x + object.size.x
             && vector.y >= object.pos.y && vector.y <= object.pos.y + object.size.y){
                 result = true;
+                break;
         }
     }
     return result;

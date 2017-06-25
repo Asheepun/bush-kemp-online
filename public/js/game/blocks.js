@@ -58,12 +58,7 @@ class Tnt{
     update(){
         if(this.health === 1) this.color = "darkred";
         if(this.health < 1){
-            let olle = new Explosion(this.pos, Math.random()*70 + 30);
-            let data = {
-                explosion: olle,
-                game: GAME,
-            }
-            socket.emit("explosion", data);
+            new Explosion(this.pos, Math.random()*70 + 30);
             this.remove();
         }
     }

@@ -54,4 +54,5 @@ io.on("connection", socket => {
     socket.on("defeat", data => socket.broadcast.emit("victory", data));
     socket.on("hit", data => socket.broadcast.emit("hit", data));
     socket.on("explosion", data => socket.broadcast.emit("explosion", data));
+    socket.on("grenade", data => socket.broadcast.emit("grenade", data));
 });

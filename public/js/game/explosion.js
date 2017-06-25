@@ -1,11 +1,16 @@
 const explosions = [];
 
 class Explosion{
-    constructor(pos, size = 50){
+    constructor(pos, size = 50, send = true){
         this.pos = pos;
         this.size = size;
         explosions.push(this);
         this.time = setTimeout(() => explosions.splice(explosions.indexOf(this), 1), 100);
+        let data = {
+            explosion: this,
+            game: GAME,
+        }
+        if(send)socket.emit("explosion", data);
     }
     draw(){
         ctx.fillStyle="orange";

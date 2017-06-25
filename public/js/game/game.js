@@ -14,11 +14,15 @@ const begin = (world) => {
     });
     socket.on("bullet", data => {
         if(data.game.name === GAME.name)
-            new Bullet(data.bullet.pos, data.bullet.speed, data.bullet.damage, false);
+            new Bullet(data.bullet.pos, data.bullet.speed, data.bullet.damage, false, false);
+    });
+    socket.on("grenade", data => {
+        if(data.game.name === GAME.name)
+            new Grenade(data.grenade.pos, data.grenade.speed, false);
     });
     socket.on("explosion", data => {
         if(data.game.name === GAME.name)
-            new Explosion(data.explosion.pos, data.explosion.size);
+            new Explosion(data.explosion.pos, data.explosion.size, false);
     });
     socket.on("hit", data => {
         if(data.game.name === GAME.name)
