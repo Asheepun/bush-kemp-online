@@ -1,7 +1,8 @@
 const bullets = [];
 
 class Bullet{
-    constructor(pos, speed, friendly = true){
+    constructor(pos, speed, damage = 1, friendly = true){
+        this.damage = damage;
         this.pos = pos;
         this.size = v(scl/3, scl/3);
         this.friendly = friendly;

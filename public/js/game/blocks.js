@@ -19,14 +19,6 @@ class Obstacle{
         if(this.health === 1) this.color = "darkgrey";
         if(this.health < 1){
             new Block(this.pos, "#131313", rubble);
-            if(Math.random() < 0.1){ 
-                let olle = new Explosion(this.pos);
-                let data = {
-                    explosion: olle,
-                    game: GAME,
-                }
-                socket.emit("explosion", data);
-            }
             this.remove();
         }
     }
@@ -47,5 +39,36 @@ class Block{
     draw(){
         ctx.fillStyle = this.color;
         ctx.fillRect(this.pos.x, this.pos.y, scl, scl);
+    }
+}
+
+class Tnt{
+    constructor(pos){
+        this.pos = pos;
+        this.size = v(scl, scl);
+        this.origin = v(this.pos.x + scl/2, this.pos.y + scl/2);
+        this.health = 2;
+        this.color = "red";
+        obstacles.push(this);
+    }
+    draw(){
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.pos.x, this.pos.y, scl, scl);
+    }
+    update(){
+        if(this.health === 1) this.color = "darkred";
+        if(this.health < 1){
+            let olle = new Explosion(this.pos, Math.random()*70 + 30);
+            let data = {
+                explosion: olle,
+                game: GAME,
+            }
+            socket.emit("explosion", data);
+            this.remove();
+        }
+    }
+    remove(){
+        obstacles.splice(obstacles.indexOf(this), 1);
+        return;
     }
 }

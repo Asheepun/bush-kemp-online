@@ -3,39 +3,63 @@ const crates = [];
 
 const initializeGuns = () => {
     guns.push(
-        Gun("pistol", 500, 10),
-        Gun("machinegun", 100, 20),
-        Gun("shotgun", 1000, 10, (char) => {
+        Gun("pistol", 500, 10, char => {
+            let dif = checkV(char);
+            dif = mult(dif, 10);
+            let pos = getStartPos(char, dif);
+            let olle = new Bullet(pos, dif, 1, 0.5);
+            sendBullet(olle);
+            knock(char, 1, dif, 10);
+        }),
+        Gun("assault rifle", 200, 5, char => {
+            let dif = checkV(char);
+            dif = mult(dif, 20);
+            let pos = getStartPos(char, dif);
+            let olle = new Bullet(pos, dif, 2);
+            sendBullet(olle);
+            knock(char, 1, dif, 20);
+        }),
+        Gun("shotgun", 1000, 5, char => {
             let dif = checkV(char);
             dif = mult(dif, 10);
             let pos = getStartPos(char, dif);
             for(let i = 0; i < 5; i++){
                 let x = Math.random()*8 - 4;
                 let y = Math.random()*8 - 4;
-                let olle = new Bullet(v(pos.x + x, pos.y + y), v(dif.x + x, dif.y + y));
+                let olle = new Bullet(v(pos.x + x, pos.y + y), v(dif.x + x, dif.y + y), 1);
                 sendBullet(olle);
             }
             knock(char, 10, dif, 10);
         }),
+        Gun("minigun", 50, 5, char => {
+            let dif = checkV(char);
+            dif = mult(dif, 15);
+            let pos = getStartPos(char, dif);
+            let x = Math.random()*8 - 4;
+            let y = Math.random()*8 - 4;
+            let olle = new Bullet(v(pos.x + x, pos.y + y), v(dif.x + x, dif.y + y), 0.5);
+            sendBullet(olle);
+            knock(char, 20, dif, 15);
+        }),
     );
+}
 
+function checkV(char, pos = pointer.pos){
+    let dif = sub(char.origin, pos);
+    dif = normalize(dif);
+    dif = reverse(dif);
+    return dif;
+}
 
-    function checkV(char, pos = pointer.pos){
-        let dif = sub(char.origin, pos);
-        dif = normalize(dif);
-        dif = reverse(dif);
-        return dif;
-    }
+function knock(char, knock, dif, d){
+    let oub = checkOub(char, width, height);  
+    let col = checkColission(char, obstacles);
+    dif = div(dif, d);
+    if(!col.hit && !oub.hit) char.pos = sub(char.pos, v(dif.x*knock, dif.y*knock));
+}
 
-    function knock(char, knock, dif, d){
-        let oub = checkOub(char, c.width, c.height);  
-        let col = checkColission(char, obstacles);
-        dif = div(dif, d);
-        if(!col.hit && !oub.hit) char.pos = sub(char.pos, v(dif.x*knock, dif.y*knock));
-    }
-    function getStartPos(char, dif){
-        return v(char.origin.x + dif.x, char.origin.y + dif.y);
-    }
+function getStartPos(char, dif){
+    return v(char.origin.x + dif.x, char.origin.y + dif.y);
 }
 
 const sendBullet = (bullet) => {
@@ -46,29 +70,16 @@ const sendBullet = (bullet) => {
     socket.emit("bullet", data);
 }
 
-const Gun = (n, fr, ss, s = (char) => {
-            let dif = sub(char.pos, pointer.pos);
-            dif = normalize(dif);
-            dif = reverse(dif);
-            dif = mult(dif, char.gun.getSS());
-            let pos = v(char.origin.x + dif.x, char.origin.y + dif.y);
-            let olle = new Bullet(pos, dif); 
-            sendBullet(olle);
-            //knockback
-            let oub = checkOub(char, c.width, c.height);  
-            let col = checkColission(char, obstacles);
-            dif = div(dif, char.gun.getSS());
-            if(!col.hit && !oub.hit) char.pos = sub(char.pos, v(dif.x, dif.y));
-        }) => {
+const Gun = (n, fr, h, s) => {
     const fireRate = fr;
-    const shotSpeed = ss;
     const name = n;
+    const health = h;
     return{
         getFR: () => {
             return fireRate;
         },
-        getSS: () => {
-            return shotSpeed;
+        getHealth: () => {
+            return health;
         },
         getName: () => {
             return name;

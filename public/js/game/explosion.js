@@ -1,7 +1,7 @@
 const explosions = [];
 
 class Explosion{
-    constructor(pos, size = 20){
+    constructor(pos, size = 50){
         this.pos = pos;
         this.size = size;
         explosions.push(this);
@@ -23,7 +23,7 @@ class Explosion{
             let dif = sub(this.pos, obj.origin);
             if(dif.mag < this.size) {
                 obj.health--;
-                //this.remove();
+                if(Tnt.prototype.isPrototypeOf(obj)) obj.health -= 2;
             }
         });
     }
