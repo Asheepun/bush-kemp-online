@@ -19,7 +19,7 @@ class Obstacle{
         if(this.health === 1) this.color = "darkgrey";
         if(this.health < 1){
             new Block(this.pos, "#131313", rubble);
-            if(Math.random() < 0.25){ 
+            if(Math.random() < 0.1){ 
                 let olle = new Explosion(this.pos);
                 let data = {
                     explosion: olle,
