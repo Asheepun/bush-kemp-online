@@ -64,7 +64,7 @@ class Player{
         if(col.object){
             if(!col.object.friendly){
                 if(col.hit){
-                    this.health--;
+                    this.health-= col.object.damage;
                     bullets.splice(bullets.indexOf(col.object), 1);
                     let data = {
                         game: GAME,
@@ -88,10 +88,8 @@ class Player{
         let col = checkColission(this, crates);
         if(col.hit){
             this.gun = guns[Math.floor(Math.random()*(guns.length-1.1))+1];
-            this.health += this.gun.getHealth();
             this.overheating = 0;
             new Text(this.gun.getName(), v(this.pos.x - 50, this.pos.y-20));
-            setTimeout(() => new Text("+" + this.gun.getHealth() + " hp", v(this.pos.x - 50, this.pos.y), "yellow"), 100);
             if(col.object){
                 let data = {
                     game: GAME,

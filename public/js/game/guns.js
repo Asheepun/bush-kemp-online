@@ -3,7 +3,7 @@ const crates = [];
 
 const initializeGuns = () => {
     guns.push(
-        Gun("pistol", 500, 10, char => {
+        Gun("pistol", 500, char => {
             let dif = checkV(char);
             dif = mult(dif, 10);
             let pos = getStartPos(char, dif);
@@ -11,7 +11,7 @@ const initializeGuns = () => {
             sendBullet(olle);
             knock(char, 1, dif, 10);
         }),
-        Gun("assault rifle", 200, 5, char => {
+        Gun("assault rifle", 200, char => {
             let dif = checkV(char);
             dif = mult(dif, 20);
             let pos = getStartPos(char, dif);
@@ -19,7 +19,7 @@ const initializeGuns = () => {
             sendBullet(olle);
             knock(char, 1, dif, 20);
         }),
-        Gun("shotgun", 1000, 5, char => {
+        Gun("shotgun", 1000, char => {
             let dif = checkV(char);
             dif = mult(dif, 10);
             let pos = getStartPos(char, dif);
@@ -31,7 +31,7 @@ const initializeGuns = () => {
             }
             knock(char, 10, dif, 10);
         }),
-        Gun("minigun", 50, 5, char => {
+        Gun("minigun", 50, char => {
             let dif = checkV(char);
             dif = mult(dif, 15);
             let pos = getStartPos(char, dif);
@@ -70,16 +70,12 @@ const sendBullet = (bullet) => {
     socket.emit("bullet", data);
 }
 
-const Gun = (n, fr, h, s) => {
+const Gun = (n, fr, s) => {
     const fireRate = fr;
     const name = n;
-    const health = h;
     return{
         getFR: () => {
             return fireRate;
-        },
-        getHealth: () => {
-            return health;
         },
         getName: () => {
             return name;
