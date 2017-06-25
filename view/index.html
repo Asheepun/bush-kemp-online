@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/css/main.css">
+        <script src="/socket.io/socket.io.js"></script>
+    </head>
+    <body>
+        <div id="register">
+            <input type="text" id="name" placeholder="name"><input type="button" value="Create Game" onclick="createGame()">
+            <ul id="games">
+
+            </ul>
+        </div>
+        <div id="game" align="center">
+            <canvas id="canvas"></canvas>
+        </div>
+        <script src="js/main.js"></script>
+
+        <script src="/js/game/engine/array.js"></script>
+        <script src="/js/game/engine/colission.js"></script>
+        <script src="/js/game/engine/keyboard.js"></script>
+        <script src="/js/game/engine/pointer.js"></script>
+        <script src="/js/game/engine/vectors.js"></script>
+        <script src="/js/game/bullets.js"></script>
+        <script src="/js/game/guns.js"></script>
+        <script src="/js/game/blocks.js"></script>
+        <script src="/js/game/world.js"></script>
+        <script src="/js/game/player.js"></script>
+        <script src="/js/game/hud.js"></script>
+        <script src="/js/game/game.js"></script>
+    </body>
+</html>
