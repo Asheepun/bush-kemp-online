@@ -10,7 +10,7 @@ class Explosion{
             explosion: this,
             game: GAME,
         }
-        if(send)socket.emit("explosion", data);
+        if(send) socket.emit("explosion", data);
     }
     draw(){
         ctx.fillStyle="orange";

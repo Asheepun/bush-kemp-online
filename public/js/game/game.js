@@ -37,6 +37,9 @@ const begin = (world) => {
         stage = end;
         setTimeout(() => location.reload(), 3000);
     });
+    socket.on("pixel", data => {
+        new Pixel(data.pixel.pos, data.pixel.speed, false);
+    });
 }
 
 const setup = () => {
@@ -74,6 +77,7 @@ const update = () => {
         players,
         explosions,
         texts,
+        pixels,
     ]);
     updateOffset();
 }
@@ -90,6 +94,7 @@ const draw = () => {
         bullets,
         players,
         bushes,
+        pixels,
         explosions,
         texts,
     ]);

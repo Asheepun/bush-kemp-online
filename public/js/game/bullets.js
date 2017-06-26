@@ -8,7 +8,7 @@ class Bullet{
         this.friendly = friendly;
         this.speed = speed;
         this.scl = sis;
-        this.rotation = angle(this.pos, v(this.pos.x + this.speed.x*100, this.pos.y + this.speed.y*100));
+        this.rotation = angle(this.pos, add(this.pos, this.speed));
         this.fired = false;
         bullets.push(this);
         let data = {

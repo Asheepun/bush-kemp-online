@@ -72,6 +72,12 @@ class Player{
                     bullet: bullets.indexOf(b),
                 }
                 socket.emit("hit", data);
+                b.speed = reverse(b.speed)
+                for(let i = 0; i < 5; i++){
+                    let x = Math.random()*10 - 5;
+                    let y = Math.random()*10 - 5;
+                    new Pixel(v(this.pos.x + x, this.pos.y + y), add(b.speed, v(x, y)));
+                }
             }
         }
         if(this.health <= 0){
