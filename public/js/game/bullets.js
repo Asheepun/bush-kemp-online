@@ -36,7 +36,7 @@ class Bullet{
 
         let oub = checkOub(this, width, height);
         let ob = obstacles.map(ob => ob.origin);
-        let col = checkProx(this.pos, ob, this.size.x);
+        let col = checkProx(this.pos, ob, this.size.x/2 + scl/2);
         if(oub.hit) this.remove();
         if(col.hit){
             let ob = obstacles.find(o => o.origin === col.vector);
@@ -48,7 +48,7 @@ class Bullet{
 
         if(!this.friendly){
             let pl = players.map(p => p.origin);
-            let col = checkProx(this.pos, pl, this.size.x/2 + 0.3);
+            let col = checkProx(this.pos, pl, this.size.x/2 + scl/3);
             if(col.hit){
                 let p = players.find(p => p.origin === col.vector);
                 if(p.id === ID){
