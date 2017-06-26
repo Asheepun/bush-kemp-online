@@ -22,8 +22,8 @@ const initializeGuns = () => {
             dif = mult(dif, 10);
             let pos = add(char.origin, dif);
             for(let i = 0; i < 5; i++){
-                let x = Math.random()*8 - 4;
-                let y = Math.random()*8 - 4;
+                let x = Math.random()*5 - 2.5;
+                let y = Math.random()*5 - 2.5;
                 new Bullet(v(pos.x + x, pos.y + y), v(dif.x + x, dif.y + y), 1);
             }
             knock(char, 10, dif, 10);
@@ -32,8 +32,8 @@ const initializeGuns = () => {
             let dif = getV(char.origin, pointer.pos);
             dif = mult(dif, 15);
             let pos = add(char.origin, dif);
-            let x = Math.random()*8 - 4;
-            let y = Math.random()*8 - 4;
+            let x = Math.random()*5 - 2.5;
+            let y = Math.random()*5 - 2.5;
             new Bullet(v(pos.x + x, pos.y + y), v(dif.x + x, dif.y + y), 0.5);
             knock(char, 20, dif, 15);
         }),
@@ -44,6 +44,13 @@ const initializeGuns = () => {
             dif = div(dif, 5);
             new Grenade(pos, dif);
             knock(char, 10, dif, 5);
+        }),
+        Gun("big berta", 2000, char => {
+            let dif =getV(char.origin, pointer.pos);
+            dif = mult(dif, 10);
+            let pos = add(char.origin, dif);
+            new Bullet(pos, dif, dif, true, true, 2);
+            knock(char, 20, dif, 10);
         }),
     );
 }

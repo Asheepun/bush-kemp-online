@@ -1,12 +1,13 @@
 const bullets = [];
 
 class Bullet{
-    constructor(pos, speed, damage = 1, friendly = true, send = true){
+    constructor(pos, speed, damage = 1, friendly = true, send = true, sis = 1){
         this.damage = damage;
         this.pos = pos;
         this.size = v(scl/1.5, scl/1.5);
         this.friendly = friendly;
         this.speed = speed;
+        this.scl = sis;
         this.rotation = angle(this.pos, v(this.pos.x + this.speed.x*100, this.pos.y + this.speed.y*100));
         this.fired = false;
         bullets.push(this);
@@ -27,8 +28,7 @@ class Bullet{
             ctx.save();
             ctx.translate(this.pos.x, this.pos.y);
             ctx.rotate(this.rotation);
-            //ctx.fillRect(-this.size.x/2, -this.size.y/2, scl/1.5, scl/3);
-            ctx.fillRect(-this.size.x/2, -this.size.y/4, this.size.x, this.size.y/2);
+            ctx.fillRect(-this.size.x/2, -this.size.y/4, this.size.x*this.scl, this.size.y/2*this.scl);
             ctx.restore();
         }
     }
@@ -40,7 +40,7 @@ class Bullet{
         if(oub.hit) this.remove();
         if(col.hit){
             if(col.object)col.object.color = "darkgrey";
-            col.object.health--;
+            col.object.health -= this.scl;
             this.remove();
         }
     }
