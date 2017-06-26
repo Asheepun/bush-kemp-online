@@ -60,26 +60,6 @@ class Player{
         }
     }
     checkHit(){
-        let bl = bullets.map(b => b.pos);
-        let col = checkProx(this.origin, bl, scl/1.8);
-        if(col.hit){
-            let b = bullets.find(b => b.pos === col.vector);
-            if(!b.friendly){
-                this.health -= b.damage;
-                bullets.splice(bullets.indexOf(b), 1);
-                let data = {
-                    game: GAME,
-                    bullet: bullets.indexOf(b),
-                }
-                socket.emit("hit", data);
-                b.speed = reverse(b.speed)
-                for(let i = 0; i < 5; i++){
-                    let x = Math.random()*10 - 5;
-                    let y = Math.random()*10 - 5;
-                    new Pixel(v(this.pos.x + x, this.pos.y + y), add(b.speed, v(x, y)));
-                }
-            }
-        }
         if(this.health <= 0){
             let data = {
                 game: GAME,

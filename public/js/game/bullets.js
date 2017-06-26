@@ -1,13 +1,12 @@
 const bullets = [];
 
 class Bullet{
-    constructor(pos, speed, damage = 1, friendly = true, send = true, sis = 1){
+    constructor(pos, speed, damage = 1, friendly = true, send = true, size = v(scl/1.5, scl/3)){
         this.damage = damage;
         this.pos = pos;
-        this.size = v(scl/1.5, scl/3);
+        this.size = size;
         this.friendly = friendly;
         this.speed = speed;
-        this.scl = sis;
         this.rotation = angle(this.pos, add(this.pos, this.speed));
         this.fired = false;
         bullets.push(this);
@@ -28,7 +27,7 @@ class Bullet{
             ctx.save();
             ctx.translate(this.pos.x, this.pos.y);
             ctx.rotate(this.rotation);
-            ctx.fillRect(-this.size.x/2*this.scl, -this.size.y/(2/this.scl), this.size.x*this.scl, this.size.y*this.scl);
+            ctx.fillRect(-this.size.x/2, -this.size.y/2, this.size.x, this.size.y);
             ctx.restore();
         }
     }
@@ -37,13 +36,36 @@ class Bullet{
 
         let oub = checkOub(this, width, height);
         let ob = obstacles.map(ob => ob.origin);
-        let col = checkProx(this.pos, ob, (scl/1.4));
+        let col = checkProx(this.pos, ob, this.size.x);
         if(oub.hit) this.remove();
         if(col.hit){
             let ob = obstacles.find(o => o.origin === col.vector);
             ob.color = "darkgrey";
-            ob.health -= this.scl;
+            ob.health -= 1;
+            if(this.size.x > scl/1.5) ob.health -= 1;
             this.remove();
+        }
+
+        if(!this.friendly){
+            let pl = players.map(p => p.origin);
+            let col = checkProx(this.pos, pl, this.size.x/2 + 0.3);
+            if(col.hit){
+                let p = players.find(p => p.origin === col.vector);
+                if(p.id === ID){
+                    p.health -= this.damage;
+                    let data = {
+                        game: GAME,
+                        bullet: bullets.indexOf(this),
+                    }
+                    socket.emit("hit", data);
+                    for(let i = 0; i < 5; i++){
+                        let x = Math.random()*10 - 5;
+                        let y = Math.random()*10 - 5;
+                        new Pixel(v(this.pos.x + x, this.pos.y + y), add(reverse(this.speed), v(x, y)));
+                    }
+                    this.remove();
+                }
+            }
         }
     }
     remove(){

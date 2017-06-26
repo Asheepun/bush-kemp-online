@@ -14,7 +14,7 @@ const begin = (world) => {
     });
     socket.on("bullet", data => {
         if(data.game.name === GAME.name)
-            new Bullet(data.bullet.pos, data.bullet.speed, data.bullet.damage, false, false, data.bullet.scl);
+            new Bullet(data.bullet.pos, data.bullet.speed, data.bullet.damage, false, false, data.bullet.size);
     });
     socket.on("grenade", data => {
         if(data.game.name === GAME.name)
@@ -137,10 +137,12 @@ const loop = () => {
 
 const updateOffset = () => {
     let player = players.find(p => p.id === ID);
-    offSet.x = -player.pos.x + c.width/2;
-    offSet.y = -player.pos.y + c.height/2;
-    if(offSet.x > 0) offSet.x = 0;
-    if(offSet.y > 0) offSet.y = 0;
-    if(offSet.x < -width + c.width) offSet.x = -width + c.width;
-    if(offSet.y < -height + c.height) offSet.y = -height + c.height;
+    if(player != undefined){
+        offSet.x = -player.pos.x + c.width/2;
+        offSet.y = -player.pos.y + c.height/2;
+        if(offSet.x > 0) offSet.x = 0;
+        if(offSet.y > 0) offSet.y = 0;
+        if(offSet.x < -width + c.width) offSet.x = -width + c.width;
+        if(offSet.y < -height + c.height) offSet.y = -height + c.height;
+    }
 }
