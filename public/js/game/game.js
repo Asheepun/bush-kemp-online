@@ -90,9 +90,9 @@ const draw = () => {
     drawArrays([
         rubble,
         obstacles,
+        pixels,
         crates,
         bullets,
-        pixels,
         players,
         bushes,
         explosions,
