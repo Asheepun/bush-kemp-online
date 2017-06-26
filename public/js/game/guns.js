@@ -34,7 +34,7 @@ const initializeGuns = () => {
             let pos = add(char.origin, dif);
             let x = Math.random()*5 - 2.5;
             let y = Math.random()*5 - 2.5;
-            new Bullet(v(pos.x + x, pos.y + y), v(dif.x + x, dif.y + y), 0.5);
+            new Bullet(v(pos.x + x, pos.y + y), v(dif.x + x, dif.y + y), 1);
             knock(char, 20, dif, 15);
         }),
         Gun("grenade launcher", 3000, char => {
