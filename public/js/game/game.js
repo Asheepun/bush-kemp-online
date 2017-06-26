@@ -14,7 +14,7 @@ const begin = (world) => {
     });
     socket.on("bullet", data => {
         if(data.game.name === GAME.name)
-            new Bullet(data.bullet.pos, data.bullet.speed, data.bullet.damage, false, false);
+            new Bullet(data.bullet.pos, data.bullet.speed, data.bullet.damage, false, false, data.bullet.scl);
     });
     socket.on("grenade", data => {
         if(data.game.name === GAME.name)

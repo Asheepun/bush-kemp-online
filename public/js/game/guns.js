@@ -49,7 +49,7 @@ const initializeGuns = () => {
             let dif =getV(char.origin, pointer.pos);
             dif = mult(dif, 10);
             let pos = add(char.origin, dif);
-            new Bullet(pos, dif, dif, true, true, 2);
+            new Bullet(pos, dif, 5, true, true, 2);
             knock(char, 20, dif, 10);
         }),
     );

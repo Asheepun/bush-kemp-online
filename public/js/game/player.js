@@ -60,20 +60,6 @@ class Player{
         }
     }
     checkHit(){
-        /*let col = checkColission(this, bullets);
-        if(col.object){
-            if(!col.object.friendly){
-                if(col.hit){
-                    this.health-= col.object.damage;
-                    bullets.splice(bullets.indexOf(col.object), 1);
-                    let data = {
-                        game: GAME,
-                        bullet: bullets.indexOf(col.object),
-                    }
-                    socket.emit("hit", data);
-                }
-            }
-        }*/
         let bl = bullets.map(b => b.pos);
         let col = checkProx(this.origin, bl, scl/1.8);
         if(col.hit){
