@@ -92,9 +92,9 @@ const draw = () => {
         obstacles,
         crates,
         bullets,
+        pixels,
         players,
         bushes,
-        pixels,
         explosions,
         texts,
     ]);
