@@ -46,5 +46,19 @@ const getV = (v1, v2) => {
     dif = normalize(dif);
     dif = reverse(dif);
     return dif;
+}
 
+const checkProx = (vec, ves, dis) => {
+    let result = {
+        hit: false,
+        vector: false,
+    };
+    ves.forEach(v => {
+        let dif = sub(vec, v);
+        if(dif.mag < dis){ 
+            result.hit = true;
+            result.vector = v;
+        }
+    });
+    return result;
 }

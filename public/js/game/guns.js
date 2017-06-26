@@ -45,7 +45,7 @@ const initializeGuns = () => {
             new Grenade(pos, dif);
             knock(char, 10, dif, 5);
         }),
-        Gun("big berta", 2000, char => {
+        Gun("big berta", 1000, char => {
             let dif =getV(char.origin, pointer.pos);
             dif = mult(dif, 10);
             let pos = add(char.origin, dif);

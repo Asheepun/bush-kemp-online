@@ -20,8 +20,9 @@ class Explosion{
     }
     update(){
         this.size += 10;
-        this.col(players);
+
         this.col(obstacles);
+        this.col(players);
     }
     col(objs){
         objs.forEach(obj => {

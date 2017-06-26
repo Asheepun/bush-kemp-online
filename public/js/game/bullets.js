@@ -4,7 +4,7 @@ class Bullet{
     constructor(pos, speed, damage = 1, friendly = true, send = true, sis = 1){
         this.damage = damage;
         this.pos = pos;
-        this.size = v(scl/1.5, scl/1.5);
+        this.size = v(scl/1.5, scl/3);
         this.friendly = friendly;
         this.speed = speed;
         this.scl = sis;
@@ -28,7 +28,7 @@ class Bullet{
             ctx.save();
             ctx.translate(this.pos.x, this.pos.y);
             ctx.rotate(this.rotation);
-            ctx.fillRect(-this.size.x/2, -this.size.y/4, this.size.x*this.scl, this.size.y/2*this.scl);
+            ctx.fillRect(-this.size.x/2*this.scl, -this.size.y/(2/this.scl), this.size.x*this.scl, this.size.y*this.scl);
             ctx.restore();
         }
     }
@@ -36,11 +36,13 @@ class Bullet{
         this.pos = add(this.pos, this.speed);
 
         let oub = checkOub(this, width, height);
-        let col = checkColission(this, obstacles);
+        let ob = obstacles.map(ob => ob.origin);
+        let col = checkProx(this.pos, ob, (scl/1.4));
         if(oub.hit) this.remove();
         if(col.hit){
-            if(col.object)col.object.color = "darkgrey";
-            col.object.health -= this.scl;
+            let ob = obstacles.find(o => o.origin === col.vector);
+            ob.color = "darkgrey";
+            ob.health -= this.scl;
             this.remove();
         }
     }
@@ -70,12 +72,10 @@ class Grenade{
         ctx.fill();
     }
     update(){
-        players.forEach(player => {
-            let dif = sub(this.pos, player.origin);
-            if(dif.mag < this.size) {
-                this.detonate();
-            }
-        });
+        let p = players.map(p => p.origin);
+        let colP = checkProx(this.pos, p, this.size);
+        if(colP.hit) this.detonate();
+
         let col = checkVectorColission(this.pos, obstacles);
         if(col){ 
             this.speed = div(this.speed, 2);
@@ -83,10 +83,7 @@ class Grenade{
         }
 
         this.pos = add(this.pos, this.speed);
-        if(this.speed.x > 0) this.speed.x -= 0.1;
-        else this.speed.x += 0.1;
-        if(this.speed.y > 0) this.speed.y -= 0.1;
-        else this.speed.y += 0.1;
+        this.speed = div(this.speed, 1.04);
     }
     detonate(){
         new Explosion(this.pos);

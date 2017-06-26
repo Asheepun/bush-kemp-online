@@ -70,9 +70,9 @@ const setup = () => {
 const update = () => {
     updateArrays([
         bullets,
-        explosions,
         obstacles,
         players,
+        explosions,
         texts,
     ]);
     updateOffset();
