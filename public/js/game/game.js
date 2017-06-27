@@ -1,6 +1,7 @@
 let c, ctx, scl, stage, FPS, width, height, offSet, WON;
 
 const audio = {};
+const sprites = {};
 
 const begin = (world) => {
     socket.on("update", data => {
@@ -41,7 +42,15 @@ const begin = (world) => {
     gameArea.style.display = "block";
     stage = setup;
     FPS = 60;
-    loadAudioTo(audio).then(loop);
+    loadAudioTo(audio, 0.5, [
+        "bullet",
+        "hit",
+        "explosion",
+        "crate",
+        "launch",
+    ]).then(() => {
+        loadSpritesTo(sprites);
+    }).then(loop);
 }
 
 const setup = () => {

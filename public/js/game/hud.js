@@ -8,5 +8,5 @@ const drawHud = () => {
     ctx.fillStyle="white";
     ctx.font="30px Graduate";
     ctx.fillText(player.health + " hp", 20-offSet.x, 41 - offSet.y);
-    ctx.fillText(player.gun.getName(), 20 - offSet.x, 71 - offSet.y);
+    ctx.fillText(player.gun.name, 20 - offSet.x, 71 - offSet.y);
 }

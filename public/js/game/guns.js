@@ -22,9 +22,8 @@ const initializeGuns = () => {
             dif = mult(dif, 10);
             let pos = add(char.origin, dif);
             for(let i = 0; i < 5; i++){
-                let x = Math.random()*5 - 2.5;
-                let y = Math.random()*5 - 2.5;
-                new Bullet(v(pos.x + x, pos.y + y), v(dif.x + x, dif.y + y), 1);
+                let spread = v(Math.random()*5 - 2.5, Math.random()*5 - 2.5);
+                new Bullet(add(pos, spread), add(dif, spread), 1);
             }
             knock(char, 10, dif, 10);
         }),
@@ -32,9 +31,8 @@ const initializeGuns = () => {
             let dif = getV(char.origin, pointer.pos);
             dif = mult(dif, 15);
             let pos = add(char.origin, dif);
-            let x = Math.random()*5 - 2.5;
-            let y = Math.random()*5 - 2.5;
-            new Bullet(v(pos.x + x, pos.y + y), v(dif.x + x, dif.y + y), 1);
+            let spread = v(Math.random()*5 - 2.5, Math.random()*5 - 2.5);
+            new Bullet(add(pos, spread), add(dif, spread), 1);
             knock(char, 20, dif, 15);
         }),
         Gun("grenade launcher", 1500, char => {
@@ -76,15 +74,9 @@ const knock = (char, knock, dif, d) => {
 }
 
 const Gun = (n, fr, s) => {
-    const fireRate = fr;
-    const name = n;
     return{
-        getFR: () => {
-            return fireRate;
-        },
-        getName: () => {
-            return name;
-        },
+        fireRate: fr,
+        name: n,
         shoot: s,
     };
 }

@@ -16,10 +16,10 @@ class Bullet{
         }
         if(send)socket.emit("bullet", data);
         let dif = sub(this.pos, players.find(p => p.id === ID).origin);
-        audio.bullet.volume = 1;
-        if(dif.mag > c.width/1.5) audio.bullet.volume = 0.5;
-        audio.bullet.load();
-        audio.bullet.play();
+        if(dif.mag < c.width/2){
+            audio.bullet.load();
+            audio.bullet.play();
+        }
     }
     draw(){
         ctx.fillStyle="yellow";
@@ -64,9 +64,8 @@ class Bullet{
                     }
                     socket.emit("hit", data);
                     for(let i = 0; i < 5; i++){
-                        let x = Math.random()*10 - 5;
-                        let y = Math.random()*10 - 5;
-                        new Pixel(v(this.pos.x + x, this.pos.y + y), add(reverse(this.speed), v(x, y)));
+                        let spread = v(Math.random()*10 - 5, Math.random()*10 - 5);
+                        new Pixel(add(this.pos, spread), add(reverse(this.speed), spread));
                     }
                     audio.hit.load();
                     audio.hit.play();
@@ -93,9 +92,6 @@ class Grenade{
             game: GAME,
         }
         if(send)socket.emit("grenade", data);
-        let dif = sub(this.pos, players.find(p => p.id === ID).origin);
-        audio.launch.volume = 1;
-        if(dif.mag > c.width/1.5) audio.launch.volume = 0.5;
         audio.launch.load();
         audio.launch.play();
     }
