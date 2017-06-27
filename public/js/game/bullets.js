@@ -14,9 +14,7 @@ class Bullet{
             bullet: this,
             game: GAME,
         }
-        if(send)socket.emit("bullet", data);
-        let dif = sub(this.pos, players.find(p => p.id === ID).origin);
-        if(dif.mag < c.width/2){
+        if(!checkOb(this.pos, -offSet.x, -offSet.y, c.width, c.heigth)){
             audio.bullet.load();
             audio.bullet.play();
         }
@@ -92,8 +90,10 @@ class Grenade{
             game: GAME,
         }
         if(send)socket.emit("grenade", data);
-        audio.launch.load();
-        audio.launch.play();
+        if(!checkOb(this.pos, -offSet.x, -offSet.y, c.width, c.heigth)){
+            audio.launch.load();
+            audio.launch.play();
+        }
     }
     draw(){
         ctx.fillStyle="yellow";

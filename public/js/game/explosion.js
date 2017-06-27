@@ -11,8 +11,10 @@ class Explosion{
             game: GAME,
         }
         if(send) socket.emit("explosion", data);
-        audio.explosion.load();
-        audio.explosion.play();
+        if(!checkOb(this.pos, -offSet.x, -offSet.y, c.width, c.heigth)){
+            audio.explosion.load();
+            audio.explosion.play();
+        }
     }
     draw(){
         ctx.fillStyle="orange";

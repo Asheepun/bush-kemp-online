@@ -165,6 +165,14 @@ function checkOub(character, width, height){
     return result;
 }
 
+const checkOb = (pos, x, y, width, height) => {
+    let result = false;
+    if(pos.x > x + width || pos.x < y || pos.y > y + height || pos.y < y){
+        result = true;
+    }
+    return result;
+}
+
 function checkVectorColission(vector, objects){
     let result = false
     for(let i = 0; i < objects.length; i++){
