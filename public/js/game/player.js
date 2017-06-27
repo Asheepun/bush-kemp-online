@@ -83,6 +83,8 @@ class Player{
                 }
                 socket.emit("crate", data);
                 crates.splice(crates.indexOf(col.object), 1);
+                audio.crate.load();
+                audio.crate.play();
             }
         }
     }

@@ -11,6 +11,11 @@ class Explosion{
             game: GAME,
         }
         if(send) socket.emit("explosion", data);
+        let dif = sub(this.pos, players.find(p => p.id === ID).origin);
+        audio.explosion.volume = 1;
+        if(dif.mag > c.width/1.5) audio.explosion.volume = 0.5;
+        audio.explosion.load();
+        audio.explosion.play();
     }
     draw(){
         ctx.fillStyle="orange";

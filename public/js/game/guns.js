@@ -58,11 +58,11 @@ const initializeGuns = () => {
                 dif = mult(dif, 10);
                 let pos = add(char.origin, dif);
                 new Bullet(pos, dif, 1, true, true, v(scl/3, scl/3));
+                knock(char, 1, dif, 20);
             }
             s();
             setTimeout(s, 100);
             setTimeout(s, 200);
-            //knock(char, 1, dif, 20);
         }),
     );
 }

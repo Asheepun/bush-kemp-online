@@ -1,11 +1,8 @@
 let c, ctx, scl, stage, FPS, width, height, offSet, WON;
 
+const audio = {};
+
 const begin = (world) => {
-    map = world;
-    gameArea.style.display = "block";
-    stage = setup;
-    FPS = 60;
-    loop();
     socket.on("update", data => {
         if(data.game.name === GAME.name){
             let player = players.find(p => p.id === "enemy");
@@ -40,6 +37,11 @@ const begin = (world) => {
     socket.on("pixel", data => {
         new Pixel(data.pixel.pos, data.pixel.speed, false);
     });
+    map = world;
+    gameArea.style.display = "block";
+    stage = setup;
+    FPS = 60;
+    loadAudioTo(audio).then(loop);
 }
 
 const setup = () => {

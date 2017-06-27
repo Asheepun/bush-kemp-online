@@ -15,6 +15,11 @@ class Bullet{
             game: GAME,
         }
         if(send)socket.emit("bullet", data);
+        let dif = sub(this.pos, players.find(p => p.id === ID).origin);
+        audio.bullet.volume = 1;
+        if(dif.mag > c.width/1.5) audio.bullet.volume = 0.5;
+        audio.bullet.load();
+        audio.bullet.play();
     }
     draw(){
         ctx.fillStyle="yellow";
@@ -63,6 +68,8 @@ class Bullet{
                         let y = Math.random()*10 - 5;
                         new Pixel(v(this.pos.x + x, this.pos.y + y), add(reverse(this.speed), v(x, y)));
                     }
+                    audio.hit.load();
+                    audio.hit.play();
                     this.remove();
                 }
             }
@@ -86,6 +93,11 @@ class Grenade{
             game: GAME,
         }
         if(send)socket.emit("grenade", data);
+        let dif = sub(this.pos, players.find(p => p.id === ID).origin);
+        audio.launch.volume = 1;
+        if(dif.mag > c.width/1.5) audio.launch.volume = 0.5;
+        audio.launch.load();
+        audio.launch.play();
     }
     draw(){
         ctx.fillStyle="yellow";
