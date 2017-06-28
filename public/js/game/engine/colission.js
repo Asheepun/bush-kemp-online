@@ -167,7 +167,7 @@ function checkOub(character, width, height){
 
 const checkOb = (pos, x, y, width, height) => {
     let result = false;
-    if(pos.x > x + width || pos.x < y || pos.y > y + height || pos.y < y){
+    if(pos.x > x + width || pos.x < x || pos.y > y + height || pos.y < y){
         result = true;
     }
     return result;
