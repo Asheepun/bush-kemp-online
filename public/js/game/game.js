@@ -8,6 +8,7 @@ const begin = (world) => {
         if(data.game.name === GAME.name){
             let player = players.find(p => p.id === "enemy");
             player.pos = data.player.pos;
+            player.rotation = data.player.rotation;
         }
     });
     socket.on("bullet", data => {

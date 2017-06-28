@@ -14,6 +14,7 @@ class Bullet{
             bullet: this,
             game: GAME,
         }
+        if(send) socket.emit("bullet", data);
         if(!checkOb(this.pos, -offSet.x, -offSet.y, c.width, c.heigth)){
             audio.bullet.load();
             audio.bullet.play();
@@ -89,7 +90,7 @@ class Grenade{
             grenade: this,
             game: GAME,
         }
-        if(send)socket.emit("grenade", data);
+        if(send) socket.emit("grenade", data);
         if(!checkOb(this.pos, -offSet.x, -offSet.y, c.width, c.heigth)){
             audio.launch.load();
             audio.launch.play();
