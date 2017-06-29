@@ -4,6 +4,7 @@ class Explosion{
     constructor(pos, size = 50, send = true){
         this.pos = pos;
         this.size = size;
+        this.img = 8;
         explosions.push(this);
         this.time = setTimeout(() => explosions.splice(explosions.indexOf(this), 1), 100);
         let data = {
@@ -17,10 +18,8 @@ class Explosion{
         }
     }
     draw(){
-        ctx.fillStyle="orange";
-        ctx.beginPath();
-        ctx.arc(this.pos.x, this.pos.y, this.size, 0, 2*Math.PI);
-        ctx.fill();
+        ctx.drawImage(sprites[this.img],
+        this.pos.x-this.size, this.pos.y-this.size, this.size*2, this.size*2);
     }
     update(){
         this.size += 10;

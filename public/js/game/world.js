@@ -12,7 +12,7 @@ const initializeMap = () => {
                 if(tile === "2") new Player(v(x, y), ID);
             }
             if(tile === "#") new Obstacle(v(x, y));
-            if(tile === "B") new Block(v(x, y), "green", bushes); 
+            if(tile === "B") new Block(v(x, y), 3, bushes); 
             if(tile === "C") new Crate(v(x, y));
             if(tile === "T") new Tnt(v(x, y));
         }

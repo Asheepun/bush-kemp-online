@@ -1,7 +1,7 @@
 let c, ctx, scl, stage, FPS, width, height, offSet, WON;
 
 const audio = {};
-const sprites = {};
+const sprites = [];
 
 const begin = (world) => {
     socket.on("update", data => {
@@ -37,19 +37,14 @@ const begin = (world) => {
         setTimeout(() => location.reload(), 3000);
     });
     socket.on("pixel", data => {
-        new Pixel(data.pixel.pos, data.pixel.speed, false);
+        new Pixel(data.pixel.img, data.pixel.pos, data.pixel.speed, data.pixel.time, false);
     });
     map = world;
     gameArea.style.display = "block";
     stage = setup;
     FPS = 60;
-    loadAudioTo(audio, 0.5, [
-        "bullet",
-        "hit",
-        "explosion",
-        "crate",
-        "launch",
-    ]).then(() => {
+    loadAudioTo(audio, 0.5)
+    .then(() => {
         loadSpritesTo(sprites);
     }).then(loop);
 }
@@ -97,8 +92,7 @@ const update = () => {
 const draw = () => {
     ctx.save();
     ctx.translate(offSet.x, offSet.y);
-    ctx.fillStyle="black";
-    ctx.fillRect(0, 0, width, height);
+    drawBackground();
     drawArrays([
         rubble,
         obstacles,
@@ -156,5 +150,14 @@ const updateOffset = () => {
         if(offSet.y > 0) offSet.y = 0;
         if(offSet.x < -width + c.width) offSet.x = -width + c.width;
         if(offSet.y < -height + c.height) offSet.y = -height + c.height;
+    }
+}
+
+const drawBackground = () => {
+    for(let i = 0; i < height/80; i++){
+        for(let j = 0; j < width/80; j++){
+            ctx.drawImage(sprites[10],
+                80*j, 80*i, 80, 80);
+        }
     }
 }

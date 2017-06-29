@@ -12,15 +12,14 @@ class Player{
         this.overheating = 0;
         this.health = 10;
         this.rotation = 0;
+        this.img = 0;
         players.push(this);
     }
     draw(){
-        //ctx.fillStyle="white";
-        //ctx.fillRect(this.pos.x, this.pos.y, this.size.x, this.size.y);
         ctx.save();
         ctx.translate(this.origin.x, this.origin.y);
         ctx.rotate(this.rotation);
-        ctx.drawImage(sprites.player, -this.size.x/2, -this.size.y/2, this.size.x, this.size.y);
+        ctx.drawImage(sprites[this.img], -this.size.x/2, -this.size.y/2, this.size.x, this.size.y);
         ctx.restore();
     }
     update(){
@@ -35,19 +34,19 @@ class Player{
         }
     }
     move(){
-        if(keys.w.down && !keys.s.down) this.speed.y = -2;
-        if(keys.s.down && !keys.w.down) this.speed.y = 2;
+        if(keys.w.down && !keys.s.down) this.speed.y = -3;
+        if(keys.s.down && !keys.w.down) this.speed.y = 3;
         if((keys.w.down && keys.s.down) || (!keys.w.down && !keys.s.down)) this.speed.y = 0;
-        if(keys.a.down && !keys.d.down) this.speed.x = -2;
-        if(keys.d.down && !keys.a.down) this.speed.x = 2;
+        if(keys.a.down && !keys.d.down) this.speed.x = -3;
+        if(keys.d.down && !keys.a.down) this.speed.x = 3;
         if((keys.a.down && keys.d.down) || (!keys.a.down && !keys.d.down)) this.speed.x = 0;
 
-        let oub = checkOub(this, width, height);  
+        let oub = checkOb(this, 0, 0, width, height);  
         let col = checkColission(this, obstacles);
-        if(col.up && this.speed.y <= 0) this.speed.y = 0;
-        if(col.down && this.speed.y >= 0) this.speed.y = 0; 
-        if(col.left && this.speed.x <= 0) this.speed.x = 0;
-        if(col.right && this.speed.x >= 0) this.speed.x = 0;
+        if((col.up || oub.up) && this.speed.y <= 0) this.speed.y = 0;
+        if((col.down || oub.down) && this.speed.y >= 0) this.speed.y = 0; 
+        if((col.left || oub.left) && this.speed.x <= 0) this.speed.x = 0;
+        if((col.right || oub.right) && this.speed.x >= 0) this.speed.x = 0;
 
         this.pos = add(this.pos, this.speed);
     }

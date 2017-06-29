@@ -1,13 +1,15 @@
 const pixels = [];
 
 class Pixel{
-    constructor(pos, speed, send = true){
+    constructor(img, pos, speed, time, send = true){
+        this.time = time;
+        this.img = img;
         this.pos = pos;
-        this.size = v(5, 5);
+        this.size = v(6, 6);
         this.speed = speed;
         this.rotation = angle(this.pos, add(this.pos, this.speed));
         pixels.push(this);
-        setTimeout(() => this.speed = v(0, 0), 100);
+        setTimeout(() => this.speed = v(0, 0), this.time);
         let data = {
             game: GAME,
             pixel: this,
@@ -18,8 +20,8 @@ class Pixel{
         ctx.save();
         ctx.translate(this.pos.x, this.pos.y);
         ctx.rotate(this.rotation);
-        ctx.fillStyle="red";
-        ctx.fillRect(0, 0, this.size.x, this.size.y);
+        ctx.drawImage(sprites[this.img],
+            0, 0, this.size.x, this.size.y);
         ctx.restore();
     }
     update(){

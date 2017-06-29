@@ -22,9 +22,24 @@ const changeVolume = (dir) => {
 }
 
 const loadSpritesTo = (sprites) => {
+    const addSprite = (src) => {
+        let s = new Image();
+        s.src = src;
+        sprites.push(s);
+    } 
+
     return new Promise(resolve => {
-        sprites.player = new Image(26, 26);
-        sprites.player.src="/sprites/player.png";
+        addSprite("/sprites/player.png");//0
+        addSprite("sprites/obstacle.png");//1
+        addSprite("sprites/rubble.png");//2
+        addSprite("sprites/bush.png");//3
+        addSprite("sprites/tnt.png");//4
+        addSprite("sprites/crate.png");//5
+        addSprite("sprites/bullet.png");//6
+        addSprite("sprites/blood.png");//7
+        addSprite("sprites/explosion.png");//8
+        addSprite("sprites/flash.png");//9
+        addSprite("sprites/background.png");//10
         resolve();
     });
 }

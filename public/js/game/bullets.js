@@ -8,6 +8,7 @@ class Bullet{
         this.friendly = friendly;
         this.speed = speed;
         this.rotation = angle(this.pos, add(this.pos, this.speed));
+        this.img = 6;
         this.fired = false;
         bullets.push(this);
         let data = {
@@ -21,19 +22,18 @@ class Bullet{
         }
     }
     draw(){
-        ctx.fillStyle="yellow";
+        ctx.save();
+        ctx.translate(this.pos.x, this.pos.y);
+        ctx.rotate(this.rotation);
         if(!this.fired){
-            ctx.beginPath();
-            ctx.arc(this.pos.x, this.pos.y, scl/3,  0, 2*Math.PI);
-            ctx.fill();
+            ctx.drawImage(sprites[9],
+            -27/2, -27/2, 27, 27)
             this.fired = true;
-        }else {
-            ctx.save();
-            ctx.translate(this.pos.x, this.pos.y);
-            ctx.rotate(this.rotation);
-            ctx.fillRect(-this.size.x/2, -this.size.y/2, this.size.x, this.size.y);
-            ctx.restore();
+        }else{
+            ctx.drawImage(sprites[this.img],
+                -this.size.x/2, -this.size.y/2, this.size.x, this.size.y);
         }
+        ctx.restore();
     }
     update(){
         this.pos = add(this.pos, this.speed);
@@ -44,7 +44,6 @@ class Bullet{
         if(oub.hit) this.remove();
         if(col.hit){
             let ob = obstacles.find(o => o.origin === col.vector);
-            ob.color = "darkgrey";
             ob.health -= 1;
             if(this.size.x > scl/1.5) ob.health -= 1;
             this.remove();
@@ -64,7 +63,7 @@ class Bullet{
                     socket.emit("hit", data);
                     for(let i = 0; i < 5; i++){
                         let spread = v(Math.random()*10 - 5, Math.random()*10 - 5);
-                        new Pixel(add(this.pos, spread), add(reverse(this.speed), spread));
+                        new Pixel(7, add(this.pos, spread), add(reverse(this.speed), spread), 100);
                     }
                     audio.hit.load();
                     audio.hit.play();
@@ -83,7 +82,9 @@ class Grenade{
     constructor(pos, speed, send = true){
         this.pos = pos;
         this.speed = speed;
+        this.img = 9;
         this.size = v(0, 0);
+        this.rotation = angle(pos, add(pos, speed));
         bullets.push(this);
         setTimeout(() => this.detonate(), 1000);
         let data = {
@@ -97,10 +98,12 @@ class Grenade{
         }
     }
     draw(){
-        ctx.fillStyle="yellow";
-        ctx.beginPath();
-        ctx.arc(this.pos.x, this.pos.y, 15, 0, 2*Math.PI);
-        ctx.fill();
+        ctx.save();
+        ctx.translate(this.pos.x, this.pos.y);
+        ctx.rotate(this.rotation);
+        ctx.drawImage(sprites[this.img],
+        -15, -15, 30, 30);
+        ctx.restore();
     }
     update(){
         let p = players.map(p => p.origin);
