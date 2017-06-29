@@ -6,7 +6,8 @@ class Player{
         this.id = id;
         this.size = size;
         this.origin = v(this.pos.x+this.size.x/2, this.pos.y+this.size.y/2);
-        this.speed = v(0, 0)
+        this.speed = v(0, 0);
+        this.acc = v(0, 0);
         this.shooting = false;
         this.gun = guns[0];
         this.overheating = 0;
@@ -40,6 +41,7 @@ class Player{
         if(keys.a.down && !keys.d.down) this.speed.x = -3;
         if(keys.d.down && !keys.a.down) this.speed.x = 3;
         if((keys.a.down && keys.d.down) || (!keys.a.down && !keys.d.down)) this.speed.x = 0;
+        this.speed = add(this.speed, this.acc);
 
         let oub = checkOb(this, 0, 0, width, height);  
         let col = checkColission(this, obstacles);

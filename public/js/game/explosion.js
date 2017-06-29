@@ -13,6 +13,7 @@ class Explosion{
         }
         if(send) socket.emit("explosion", data);
         if(!checkOb(this.pos, -offSet.x, -offSet.y, c.width, c.heigth)){
+            audio.explosion.pause();
             audio.explosion.load();
             audio.explosion.play();
         }

@@ -1,4 +1,4 @@
-let c, ctx, scl, stage, FPS, width, height, offSet, WON;
+let c, ctx, scl, stage, FPS, width, height, offSet, WON, FS;
 
 const audio = {};
 const sprites = [];
@@ -6,9 +6,11 @@ const sprites = [];
 const begin = (world) => {
     socket.on("update", data => {
         if(data.game.name === GAME.name){
-            let player = players.find(p => p.id === "enemy");
-            player.pos = data.player.pos;
-            player.rotation = data.player.rotation;
+            if(data.player != undefined){
+                let player = players.find(p => p.id === "enemy");
+                player.pos = data.player.pos;
+                player.rotation = data.player.rotation;
+            }
         }
     });
     socket.on("bullet", data => {
@@ -47,6 +49,19 @@ const begin = (world) => {
     .then(() => {
         loadSpritesTo(sprites);
     }).then(loop);
+    
+    FS = false;
+    document.addEventListener("keydown", e => {
+        if(e.keyCode === 70){
+            if(!FS){
+                FS = true;
+                c.webkitRequestFullscreen();
+            }else{
+                FS = false;
+                document.webkitExitFullscreen();
+            }
+        }
+    });
 }
 
 const setup = () => {

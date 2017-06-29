@@ -17,6 +17,7 @@ class Bullet{
         }
         if(send) socket.emit("bullet", data);
         if(!checkOb(this.pos, -offSet.x, -offSet.y, c.width, c.heigth)){
+            audio.bullet.pause();
             audio.bullet.load();
             audio.bullet.play();
         }
