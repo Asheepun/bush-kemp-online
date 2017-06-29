@@ -15,10 +15,6 @@ const begin = (world) => {
                 if(b.damage != undefined) new Bullet(b.pos, b.speed, b.damage, false, false);
                 else new Grenade(b.pos, b.size, false);
             });
-            //explosions
-            data.explosions.forEach(e => {
-                new Explosion(e.pos, e.size, false);
-            });
             //victory
             if(data.won != undefined && !data.won){
                 WON = true;
@@ -113,9 +109,6 @@ const emitUpdates = () => {
     let data = {
         player: players.find(p => p.id === ID),
         bullets: bullets.filter(b => b.num === current),
-        explosions: explosions.filter(e => e.num === current),
-        crates: crates,
-
         won: WON,
         game: GAME,
     }
