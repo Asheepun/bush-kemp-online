@@ -12,7 +12,7 @@ const begin = (world) => {
             p.rotation = data.player.rotation;
             //bullets
             data.bullets.forEach(b => {
-                if(b.damage != undefined) new Bullet(b.pos, b.speed, b.damage, false, false);
+                if(b.damage != undefined) new Bullet(b.pos, b.speed, b.damage, false, false, b.size);
                 else new Grenade(b.pos, b.size, false);
             });
             //victory

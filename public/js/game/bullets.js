@@ -24,7 +24,7 @@ class Bullet{
         ctx.rotate(this.rotation);
         if(!this.fired){
             ctx.drawImage(sprites[9],
-            -27/2, -27/2, 27, 27)
+            -this.size.x/2, -this.size.x/2, this.size.x, this.size.x)
             this.fired = true;
         }else{
             ctx.drawImage(sprites[this.img],
