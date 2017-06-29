@@ -49,11 +49,4 @@ io.on("connection", socket => {
     });
 
     socket.on("update", data => socket.broadcast.emit("update", data));
-    socket.on("bullet", data => socket.broadcast.emit("bullet", data));
-    socket.on("crate", data => socket.broadcast.emit("crate", data));
-    socket.on("defeat", data => socket.broadcast.emit("victory", data));
-    socket.on("hit", data => socket.broadcast.emit("hit", data));
-    socket.on("explosion", data => socket.broadcast.emit("explosion", data));
-    socket.on("grenade", data => socket.broadcast.emit("grenade", data));
-    socket.on("pixel", data => socket.broadcast.emit("pixel", data));
 });

@@ -1,7 +1,7 @@
 const bullets = [];
 
 class Bullet{
-    constructor(pos, speed, damage = 1, friendly = true, send = true, size = v(scl/1.5, scl/3)){
+    constructor(pos, speed, damage = 1, num = current + 1 - 1, friendly = true, size = v(scl/1.5, scl/3)){
         this.damage = damage;
         this.pos = pos;
         this.size = size;
@@ -10,12 +10,8 @@ class Bullet{
         this.rotation = angle(this.pos, add(this.pos, this.speed));
         this.img = 6;
         this.fired = false;
+        this.num = num;
         bullets.push(this);
-        let data = {
-            bullet: this,
-            game: GAME,
-        }
-        if(send) socket.emit("bullet", data);
         if(!checkOb(this.pos, -offSet.x, -offSet.y, c.width, c.heigth)){
             audio.bullet.pause();
             audio.bullet.load();
@@ -57,17 +53,25 @@ class Bullet{
                 let p = players.find(p => p.origin === col.vector);
                 if(p.id === ID){
                     p.health -= this.damage;
-                    let data = {
-                        game: GAME,
-                        bullet: bullets.indexOf(this),
-                    }
-                    socket.emit("hit", data);
                     for(let i = 0; i < 5; i++){
                         let spread = v(Math.random()*10 - 5, Math.random()*10 - 5);
                         new Pixel(7, add(this.pos, spread), add(reverse(this.speed), spread), 100);
                     }
                     audio.hit.load();
                     audio.hit.play();
+                    this.remove();
+                }
+            }
+        }else{
+            let pl = players.map(p => p.origin);
+            let col = checkProx(this.pos, pl, this.size.x/2 + scl/3);
+            if(col.hit){
+                let p = players.find(p => p.origin === col.vector);
+                if(p.id === "enemy"){
+                    for(let i = 0; i < 5; i++){
+                        let spread = v(Math.random()*10 - 5, Math.random()*10 - 5);
+                        new Pixel(7, add(this.pos, spread), add(reverse(this.speed), spread), 100);
+                    }
                     this.remove();
                 }
             }
@@ -80,7 +84,8 @@ class Bullet{
 }
 
 class Grenade{
-    constructor(pos, speed, send = true){
+    constructor(pos, speed, num = current + 1 - 1){
+        this.num = num
         this.pos = pos;
         this.speed = speed;
         this.img = 9;
@@ -88,11 +93,6 @@ class Grenade{
         this.rotation = angle(pos, add(pos, speed));
         bullets.push(this);
         setTimeout(() => this.detonate(), 1000);
-        let data = {
-            grenade: this,
-            game: GAME,
-        }
-        if(send) socket.emit("grenade", data);
         if(!checkOb(this.pos, -offSet.x, -offSet.y, c.width, c.heigth)){
             audio.launch.load();
             audio.launch.play();

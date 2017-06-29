@@ -7,7 +7,7 @@ const initializeGuns = () => {
             let dif = getV(char.origin, pointer.pos);
             let pos = add(char.origin, mult(dif, 20));
             dif = mult(dif, 10);
-            new Bullet(pos, dif, 1, 0.5);
+            new Bullet(pos, dif, 1);
             knock(char, 1, dif, 10);
         }),
         Gun("assault rifle", 200, char => {
@@ -47,7 +47,7 @@ const initializeGuns = () => {
             let dif =getV(char.origin, pointer.pos);
             let pos = add(char.origin, mult(dif, 20));
             dif = mult(dif, 10);
-            new Bullet(pos, dif, 5, true, true, mult(v(scl/1.5, scl/3), 2));
+            new Bullet(pos, dif, 5, current+1-1, true, mult(v(scl/1.5, scl/3), 2));
             knock(char, 20, dif, 10);
         }),
         Gun("burst rifle", 700, char => {
@@ -55,7 +55,7 @@ const initializeGuns = () => {
                 let dif = getV(char.origin, pointer.pos);
                 let pos = add(char.origin, mult(dif, 20));
                 dif = mult(dif, 10);
-                new Bullet(pos, dif, 1, true, true, v(scl/3, scl/3));
+                new Bullet(pos, dif, 1, current+1-1, true, v(scl/3, scl/3));
                 knock(char, 1, dif, 20);
             }
             s();

@@ -20,9 +20,9 @@ class Obstacle{
     update(){
         if(this.health === 1) this.frame = 1;
         if(this.health < 1){
-            for(let i = 0; i < 10; i++){
-                let speed = v(Math.random()*5 - 2.5, Math.random()*5 - 2.5);
-                new Pixel(2, add(this.origin, mult(speed, 10)), speed, 200);
+            for(let i = 0; i < Math.floor(Math.random()*3)+2; i++){
+                let speed = v(Math.random()*4 - 2, Math.random()*4 - 2);
+                new Pixel(2, add(this.origin, mult(speed, 10)), speed, 200, v(10, 10));
             }
             this.remove();
         }
@@ -65,7 +65,7 @@ class Tnt{
     update(){
         if(this.health === 1) this.frame = 1;
         if(this.health < 1){
-            new Explosion(this.pos, Math.random()*70 + 30);
+            new Explosion(this.pos, Math.random()*70 + 30, false);
             this.remove();
         }
     }

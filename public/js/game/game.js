@@ -1,4 +1,4 @@
-let c, ctx, scl, stage, FPS, width, height, offSet, WON, FS;
+let c, ctx, scl, stage, FPS, width, height, offSet, WON, FS, current = 0;
 
 const audio = {};
 const sprites = [];
@@ -6,40 +6,26 @@ const sprites = [];
 const begin = (world) => {
     socket.on("update", data => {
         if(data.game.name === GAME.name){
-            if(data.player != undefined){
-                let player = players.find(p => p.id === "enemy");
-                player.pos = data.player.pos;
-                player.rotation = data.player.rotation;
+            //player
+            let p = players.find(p => p.id === "enemy");
+            p.pos = data.player.pos;
+            p.rotation = data.player.rotation;
+            //bullets
+            data.bullets.forEach(b => {
+                if(b.damage != undefined) new Bullet(b.pos, b.speed, b.damage, false, false);
+                else new Grenade(b.pos, b.size, false);
+            });
+            //explosions
+            data.explosions.forEach(e => {
+                new Explosion(e.pos, e.size, false);
+            });
+            //victory
+            if(data.won != undefined && !data.won){
+                WON = true;
+                stage = end;
+                setTimeout(() => location.reload(), 3000);
             }
         }
-    });
-    socket.on("bullet", data => {
-        if(data.game.name === GAME.name)
-            new Bullet(data.bullet.pos, data.bullet.speed, data.bullet.damage, false, false, data.bullet.size);
-    });
-    socket.on("grenade", data => {
-        if(data.game.name === GAME.name)
-            new Grenade(data.grenade.pos, data.grenade.speed, false);
-    });
-    socket.on("explosion", data => {
-        if(data.game.name === GAME.name)
-            new Explosion(data.explosion.pos, data.explosion.size, false);
-    });
-    socket.on("hit", data => {
-        if(data.game.name === GAME.name)
-            bullets.splice(data.bullet, 1);
-    });
-    socket.on("crate", data => {
-        if(data.game.name === GAME.name)
-            crates.splice(data.crate, 1);
-    });
-    socket.on("victory", data => {
-        WON = true;
-        stage = end;
-        setTimeout(() => location.reload(), 3000);
-    });
-    socket.on("pixel", data => {
-        new Pixel(data.pixel.img, data.pixel.pos, data.pixel.speed, data.pixel.time, false);
     });
     map = world;
     gameArea.style.display = "block";
@@ -126,9 +112,15 @@ const draw = () => {
 const emitUpdates = () => {
     let data = {
         player: players.find(p => p.id === ID),
+        bullets: bullets.filter(b => b.num === current),
+        explosions: explosions.filter(e => e.num === current),
+        crates: crates,
+
+        won: WON,
         game: GAME,
     }
     socket.emit("update", data);
+    current += 1;
 }
 
 const game = () => {

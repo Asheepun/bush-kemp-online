@@ -1,17 +1,12 @@
 const explosions = [];
 
 class Explosion{
-    constructor(pos, size = 50, send = true){
+    constructor(pos, size = 50){
         this.pos = pos;
         this.size = size;
         this.img = 8;
         explosions.push(this);
         this.time = setTimeout(() => explosions.splice(explosions.indexOf(this), 1), 100);
-        let data = {
-            explosion: this,
-            game: GAME,
-        }
-        if(send) socket.emit("explosion", data);
         if(!checkOb(this.pos, -offSet.x, -offSet.y, c.width, c.heigth)){
             audio.explosion.pause();
             audio.explosion.load();

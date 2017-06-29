@@ -1,20 +1,15 @@
 const pixels = [];
 
 class Pixel{
-    constructor(img, pos, speed, time, send = true){
+    constructor(img, pos, speed, time, size = v(6, 6)){
         this.time = time;
         this.img = img;
         this.pos = pos;
-        this.size = v(6, 6);
+        this.size = size;
         this.speed = speed;
         this.rotation = angle(this.pos, add(this.pos, this.speed));
         pixels.push(this);
         setTimeout(() => this.speed = v(0, 0), this.time);
-        let data = {
-            game: GAME,
-            pixel: this,
-        }
-        if(send) socket.emit("pixel", data);
     }
     draw(){
         ctx.save();
