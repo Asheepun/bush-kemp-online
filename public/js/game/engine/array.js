@@ -19,3 +19,11 @@ function spliceArrays(arrays){
         array.splice(0, array.length);
     });
 }
+
+const findIndex = (array, condition) => {
+    for(let i = 0; i < array.length; i++){
+        if(condition(array[i])){
+            return i;
+        }else if(i === array.length-1) return false;
+    }
+} 

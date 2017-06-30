@@ -65,7 +65,7 @@ class Tnt{
     update(){
         if(this.health === 1) this.frame = 1;
         if(this.health < 1){
-            new Explosion(this.pos, Math.random()*70 + 30, false);
+            new Explosion(this.origin);
             this.remove();
         }
     }
@@ -80,6 +80,7 @@ class Crate{
         this.pos = pos;
         this.size = v(scl, scl);
         this.img = 5;
+        this.hit = false;
         crates.push(this);
     }
     draw(){

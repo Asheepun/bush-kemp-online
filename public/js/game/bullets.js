@@ -50,22 +50,21 @@ class Bullet{
         col = checkProx(this.pos, pl, this.size.x/2 + scl/3);
         if(col.hit){
             let p = players.find(p => p.origin === col.vector);
-            if((!this.friendly && p.id === ID) || (this.friendly && p.id === "enemy")){
-                if(!this.friendly && p.id === ID){
-                    audio.hit.load();
-                    audio.hit.play();
-                    p.health -= this.damage;
-                    if(p.health <= 0){
-                        WON = false;
-                        stage = end;
-                        setTimeout(() => location.reload(), 3000);
-                    }
-                    this.remove();
+            if(!this.friendly && p.id === ID){
+                audio.hit.load();
+                audio.hit.play();
+                p.health -= this.damage;
+                p.hit = bullets.indexOf(this);
+                if(p.health <= 0){
+                    WON = false;
+                    stage = end;
+                    setTimeout(() => location.reload(), 3000);
                 }
                 for(let i = 0; i < 5; i++){
                     let spread = v(Math.random()*10 - 5, Math.random()*10 - 5);
                     new Pixel(7, add(this.pos, spread), add(reverse(this.speed), spread), 100);
                 }
+                this.remove();
             }
         }
     }

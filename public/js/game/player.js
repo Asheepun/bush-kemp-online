@@ -14,6 +14,7 @@ class Player{
         this.health = 10;
         this.rotation = 0;
         this.img = 0;
+        this.hit = undefined;
         players.push(this);
     }
     draw(){
@@ -67,11 +68,10 @@ class Player{
             this.gun = guns[Math.floor(Math.random()*(guns.length-1.1))+1];
             this.overheating = 0;
             new Text(this.gun.name, v(this.pos.x - 50, this.pos.y-20));
-            if(col.object){
-                crates.splice(crates.indexOf(col.object), 1);
-                audio.crate.load();
-                audio.crate.play();
-            }
+            if(col.object) col.object.hit = true;
+            audio.crate.load();
+            audio.crate.play();
+            console.log(col.object);
         }
     }
 }

@@ -1,4 +1,4 @@
-let c, ctx, scl, stage, FPS, width, height, offSet, WON, FS, current = 0;
+let c, ctx, scl, stage, FPS, width, height, offSet, WON, FS, current = 0, hit;
 
 const audio = {};
 const sprites = [];
@@ -10,11 +10,21 @@ const begin = (world) => {
             let p = players.find(p => p.id === "enemy");
             p.pos = data.player.pos;
             p.rotation = data.player.rotation;
+            if(data.player.hit != undefined){
+                let b = bullets[data.player.hit];
+                for(let i = 0; i < 5; i++){
+                    let spread = v(Math.random()*10 - 5, Math.random()*10 - 5);
+                    new Pixel(7, add(b.pos, spread), add(reverse(b.speed), spread), 100);
+                }
+                bullets.splice(data.player.hit, 1);
+            }
             //bullets
             data.bullets.forEach(b => {
                 if(b.damage != undefined) new Bullet(b.pos, b.speed, b.damage, false, false, b.size);
                 else new Grenade(b.pos, b.speed, false);
             });
+            //crates
+            if(data.crate) crates.splice(data.crate, 1);
             //victory
             if(data.won != undefined && !data.won){
                 WON = true;
@@ -106,14 +116,19 @@ const draw = () => {
 }
 
 const emitUpdates = () => {
+    let c = findIndex(crates, c => c.hit);
     let data = {
         player: players.find(p => p.id === ID),
         bullets: bullets.filter(b => b.num === current),
+        crate: c,
         won: WON,
         game: GAME,
     }
     socket.emit("update", data);
+    //updateAgain
     current += 1;
+    data.player.hit = undefined;
+    if(c) crates.splice(c, 1);
 }
 
 const game = () => {
