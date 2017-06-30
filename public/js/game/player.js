@@ -64,14 +64,19 @@ class Player{
     }
     checkCrates(){
         let col = checkColission(this, crates);
-        if(col.hit){
+        if(col.hit && col.object){
             this.gun = guns[Math.floor(Math.random()*(guns.length-1.1))+1];
             this.overheating = 0;
             new Text(this.gun.name, v(this.pos.x - 50, this.pos.y-20));
-            if(col.object) col.object.hit = true;
+            let c = crates.indexOf(col.object);
+            let data = {
+                crate: c,
+                game: GAME,
+            }
+            socket.emit("crate", data);
+            crates.splice(c, 1);
             audio.crate.load();
             audio.crate.play();
-            console.log(col.object);
         }
     }
 }

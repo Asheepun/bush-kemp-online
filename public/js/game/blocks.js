@@ -80,7 +80,6 @@ class Crate{
         this.pos = pos;
         this.size = v(scl, scl);
         this.img = 5;
-        this.hit = false;
         crates.push(this);
     }
     draw(){
