@@ -13,7 +13,7 @@ const begin = (world) => {
             //bullets
             data.bullets.forEach(b => {
                 if(b.damage != undefined) new Bullet(b.pos, b.speed, b.damage, false, false, b.size);
-                else new Grenade(b.pos, b.size, false);
+                else new Grenade(b.pos, b.speed, false);
             });
             //victory
             if(data.won != undefined && !data.won){
