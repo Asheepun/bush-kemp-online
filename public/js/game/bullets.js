@@ -55,6 +55,11 @@ class Bullet{
                     audio.hit.load();
                     audio.hit.play();
                     p.health -= this.damage;
+                    if(p.health <= 0){
+                        WON = false;
+                        state = end;
+                        setTimeout(() => location.reload(), 3000);
+                    }
                 }
                 for(let i = 0; i < 5; i++){
                     let spread = v(Math.random()*10 - 5, Math.random()*10 - 5);
