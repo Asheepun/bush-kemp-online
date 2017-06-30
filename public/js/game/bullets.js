@@ -57,7 +57,7 @@ class Bullet{
                     p.health -= this.damage;
                     if(p.health <= 0){
                         WON = false;
-                        state = end;
+                        stage = end;
                         setTimeout(() => location.reload(), 3000);
                     }
                 }
