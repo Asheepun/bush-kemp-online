@@ -60,11 +60,11 @@ class Bullet{
                         stage = end;
                         setTimeout(() => location.reload(), 3000);
                     }
-                    for(let i = 0; i < 5; i++){
-                        let spread = v(Math.random()*10 - 5, Math.random()*10 - 5);
-                        new Pixel(7, add(this.pos, spread), add(reverse(this.speed), spread), 100);
-                    }
                     this.remove();
+                }
+                for(let i = 0; i < 5; i++){
+                    let spread = v(Math.random()*10 - 5, Math.random()*10 - 5);
+                    new Pixel(7, add(this.pos, spread), add(reverse(this.speed), spread), 100);
                 }
             }
         }
